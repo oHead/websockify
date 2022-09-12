@@ -633,6 +633,9 @@ class WebSockifyServer():
         multiprocessing.active_children()
         self.msg("multiprocessing stuff")
         self.msg(multiprocessing.active_children())
+        self.msg("MY PID: ", os.getpid())
+        self.msg("MY group: ", os.getpgid())
+        self.msg("MY process group: ", os.getpgrp())
 
     def fallback_SIGCHLD(self, sig, stack):
         # Reap zombies when using os.fork() (python 2.4)
