@@ -623,6 +623,7 @@ class WebSockifyServer():
 
     def terminate(self):
         if not self.terminating:
+            self.msg("inside terminate")
             self.terminating = True
             raise self.Terminate()
 
@@ -630,6 +631,8 @@ class WebSockifyServer():
         # TODO: figure out a way to actually log this information without
         #       calling `log` in the signal handlers
         multiprocessing.active_children()
+        self.msg("multiprocessing stuff")
+        self.msg(multiprocessing.active_children())
 
     def fallback_SIGCHLD(self, sig, stack):
         # Reap zombies when using os.fork() (python 2.4)
@@ -646,11 +649,13 @@ class WebSockifyServer():
     def do_SIGINT(self, sig, stack):
         # TODO: figure out a way to actually log this information without
         #       calling `log` in the signal handlers
+        self.msg("inside do_SIGINT")
         self.terminate()
 
     def do_SIGTERM(self, sig, stack):
         # TODO: figure out a way to actually log this information without
         #       calling `log` in the signal handlers
+        self.msg("inside do_SIGTERM")
         self.terminate()
 
     def top_new_client(self, startsock, address):
